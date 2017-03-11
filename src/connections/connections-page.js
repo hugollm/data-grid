@@ -10,7 +10,7 @@ export default class ConnectionsPage extends Component {
     render() {
         return <div className="container connections-page">
             <div className="page-header">
-                <h1><i className="fa fa-th-large"></i> Data Grid</h1>
+                <button className="btn btn-link"><i className="fa fa-plus"></i> Add connection</button>
             </div>
             {this.renderConnections()}
         </div>;
