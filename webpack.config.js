@@ -11,7 +11,8 @@ var config = {
     },
     module: {
         loaders: []
-    }
+    },
+    target: 'electron'
 };
 
 
