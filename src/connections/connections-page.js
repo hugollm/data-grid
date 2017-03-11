@@ -10,7 +10,9 @@ export default class ConnectionsPage extends Component {
     render() {
         return <div className="container connections-page">
             <div className="page-header">
-                <button className="btn btn-link"><i className="fa fa-plus"></i> Add connection</button>
+                <button className="btn btn-link" onClick={this.onClickAddConnection.bind(this)}>
+                    <i className="fa fa-plus"></i> Add connection
+                </button>
             </div>
             {this.renderConnections()}
         </div>;
@@ -34,6 +36,10 @@ export default class ConnectionsPage extends Component {
                 <span className="text-muted">localhost</span>
             </div>
         </li>;
+    }
+
+    onClickAddConnection() {
+        changePage('add-connection');
     }
 
     onClickConnection() {

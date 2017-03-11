@@ -1,5 +1,7 @@
 .connections-page {
 
+    max-width: 600px;
+
     .connection {
 
         i {
@@ -13,5 +15,14 @@
             cursor: pointer;
             background-color: #f6f6f6;
         }
+    }
+}
+
+.add-connection-page {
+
+    max-width: 600px;
+
+    .btn {
+        margin-right: 10px;
     }
 }
