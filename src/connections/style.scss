@@ -1,10 +1,9 @@
 .connections-page {
 
+    margin-top: -50px;
+
     h1 {
-        margin: 0;
-        padding: 40px;
-        padding-bottom: 30px;
-        background-color: #f6f6f6;
+        opacity: 0.9;
     }
 
     .connection {
@@ -14,6 +13,11 @@
             margin-right: 12px;
             margin-top: 5px;
             opacity: 0.8;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: #f6f6f6;
         }
     }
 }

@@ -37,6 +37,6 @@ export default class ConnectionsPage extends Component {
     }
 
     onClickConnection() {
-        changePage('dashboard');
+        changePage('query');
     }
 }

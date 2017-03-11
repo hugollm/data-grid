@@ -18,9 +18,7 @@ export default class App extends Component {
         var page = store.get('app.page');
         if (page == 'connections')
             return <ConnectionsPage/>;
-        else if (page == 'dashboard')
-            return <Dashboard/>;
         else
-            return <p>{page}</p>;
+            return <Dashboard/>;
     }
 }
