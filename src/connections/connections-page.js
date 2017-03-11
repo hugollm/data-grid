@@ -1,10 +1,11 @@
 import React from 'react';
+import Component from 'app/component';
 
 import { changePage } from 'app/actions';
 import './style.scss';
 
 
-export default class ConnectionsPage extends React.Component {
+export default class ConnectionsPage extends Component {
 
     render() {
         return <div className="container connections-page">

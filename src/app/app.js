@@ -1,4 +1,5 @@
 import React from 'react';
+import Component from './component';
 
 import store from './store';
 import ConnectionsPage from 'connections/connections-page';
@@ -6,19 +7,11 @@ import Dashboard from 'dashboard/dashboard';
 import './style.scss';
 
 
-export default class App extends React.Component {
+export default class App extends Component {
 
     constructor() {
         super();
-        this.update = this.forceUpdate.bind(this);
-    }
-
-    componentDidMount() {
-        store.listenData('app.page', this.update);
-    }
-
-    componentWillUnmount() {
-        store.unlistenData('app.page', this.update);
+        this.updateOnData('app.page');
     }
 
     render() {

@@ -1,8 +1,10 @@
 import React from 'react';
+import Component from 'app/component';
+
 import './style.scss';
 
 
-export default class Dashboard extends React.Component {
+export default class Dashboard extends Component {
 
     render() {
         return <div className="dashboard">
