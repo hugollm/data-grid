@@ -13,14 +13,6 @@ export default class Sidebar extends Component {
                 </li>
             </ul>
             <ul className="nav nav-sidebar">
-                <li onClick={this.onClickQuery.bind(this)}>
-                    <a href="#"><i className="fa fa-star"></i> Useful query</a>
-                </li>
-                <li onClick={this.onClickQuery.bind(this)}>
-                    <a href="#"><i className="fa fa-star"></i> Report on users</a>
-                </li>
-            </ul>
-            <ul className="nav nav-sidebar">
                 <li onClick={this.onClickTable.bind(this)}><a href="#"><i className="fa fa-table"></i> users</a></li>
                 <li onClick={this.onClickTable.bind(this)}><a href="#"><i className="fa fa-table"></i> roles</a></li>
                 <li onClick={this.onClickTable.bind(this)}><a href="#"><i className="fa fa-table"></i> projects</a></li>
