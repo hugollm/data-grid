@@ -1,8 +1,8 @@
 import React from 'react';
-import { ipcRenderer } from 'electron';
 
 import Component from 'app/component';
 import { changePage } from 'app/actions';
+import { checkConnection } from './actions';
 
 
 export default class AddConnectionPage extends Component {
@@ -46,10 +46,9 @@ export default class AddConnectionPage extends Component {
     }
 
     onClickCheckConnection() {
-        ipcRenderer.once('test-connection-response', (event, status) => {
+        checkConnection(this.state.connection, (status) => {
             this.setState({connectionIsValid: status.valid, connectionError: status.error});
         });
-        ipcRenderer.send('test-connection-request', this.state.connection);
     }
 
     onClickSave() {
