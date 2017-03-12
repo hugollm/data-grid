@@ -2,7 +2,7 @@ import React from 'react';
 
 import Component from 'app/component';
 import { changePage } from 'app/actions';
-import { checkConnection } from './actions';
+import { checkConnection, saveConnection } from './actions';
 
 
 export default class AddConnectionPage extends Component {
@@ -52,6 +52,9 @@ export default class AddConnectionPage extends Component {
     }
 
     onClickSave() {
+        if (!this.state.connectionIsValid)
+            return;
+        saveConnection(this.state.connection);
         changePage('connections');
     }
 
@@ -100,7 +103,7 @@ export default class AddConnectionPage extends Component {
                 <span className="text-danger">{this.state.connectionError}</span>
             </div>
             <hr/>
-            <button className="btn btn-primary disabled" onClick={this.onClickSave.bind(this)}>Save</button>
+            <button className="btn btn-primary" onClick={this.onClickSave.bind(this)} disabled={!this.state.connectionIsValid}>Save</button>
             <button className="btn btn-default" onClick={this.onClickCancel.bind(this)}>Cancel</button>
         </div>;
     }
