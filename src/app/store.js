@@ -5,7 +5,8 @@ const store = new TrueStore({
 
     app: {
         page: 'connections',
-    }
+        connections: null,
+    },
 });
 
 store.debug = true;
