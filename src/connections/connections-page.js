@@ -18,6 +18,14 @@ export default class ConnectionsPage extends Component {
         loadConnections();
     }
 
+    onClickAddConnection() {
+        changePage('add-connection');
+    }
+
+    onClickConnection(connection) {
+        changePage('query');
+    }
+
     render() {
         return <div className="container connections-page">
             <div className="page-header">
@@ -56,13 +64,5 @@ export default class ConnectionsPage extends Component {
                 </div>
             </div>
         </li>;
-    }
-
-    onClickAddConnection() {
-        changePage('add-connection');
-    }
-
-    onClickConnection(connection) {
-        changePage('query');
     }
 }
