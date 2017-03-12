@@ -7,11 +7,11 @@ export const loadConnections = store.action('loadConnections', (state) => {
     storage.get('connections', (error, connections) => {
         if (!Array.isArray(connections))
             connections = [];
-        connectionsLoaded(connections);
+        updateConnections(connections);
     });
 });
 
-const connectionsLoaded = store.action('connectionsLoaded', (state, connections) => {
+const updateConnections = store.action('updateConnections', (state, connections) => {
     state.app.connections = connections;
 });
 
@@ -27,6 +27,8 @@ export const saveConnection = store.action('saveConnection', (state, connection)
         if (!Array.isArray(connections))
             connections = [];
         connections.push(connection);
-        storage.set('connections', connections);
+        storage.set('connections', connections, (error) => {
+            updateConnections(connections);
+        });
     });
 });
