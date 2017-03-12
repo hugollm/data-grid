@@ -10,47 +10,46 @@ export default class AddConnectionPage extends Component {
     constructor() {
         super();
         this.state = {
-            host: '/var/run/postgresql',
-            port: '5432',
-            database: '',
-            user: 'postgres',
-            password: '',
+            connection: {
+                host: '/var/run/postgresql',
+                port: '5432',
+                database: '',
+                user: 'postgres',
+                password: '',
+            },
             connectionIsValid: null,
             connectionError: '',
         };
     }
 
     componentDidMount() {
-        this.refs.host.focus();
-        ipcRenderer.on('test-connection-response', (event, status) => {
-            console.log(status);
-            this.setState({connectionIsValid: status.valid, connectionError: status.error});
-        });
+        this.refs.database.focus();
     }
 
     bindValue(e) {
-        var state = this.state;
-        state[e.target.name] = e.target.value;
-        this.setState(state);
+        var connection = this.state.connection;
+        var name = e.target.name;
+        var value = e.target.value;
+        if (name != 'password')
+            value = value.trim()
+        connection[name] = value;
+        this.setState({connection: connection});
     }
 
     isFormValid() {
-        var host = this.state.host.trim();
-        var port = this.state.port.trim();
-        var database = this.state.database.trim();
-        var user = this.state.user.trim();
+        var connection = this.state.connection;
+        var host = connection.host.trim();
+        var port = connection.port.trim();
+        var database = connection.database.trim();
+        var user = connection.user.trim();
         return host && port && database && user;
     }
 
     onClickCheckConnection() {
-        var params = {
-            host: this.state.host.trim(),
-            port: this.state.port.trim(),
-            database: this.state.database.trim(),
-            user: this.state.user.trim(),
-            password: this.state.password,
-        };
-        ipcRenderer.send('test-connection-request', params);
+        ipcRenderer.once('test-connection-response', (event, status) => {
+            this.setState({connectionIsValid: status.valid, connectionError: status.error});
+        });
+        ipcRenderer.send('test-connection-request', this.state.connection);
     }
 
     onClickSave() {
@@ -62,7 +61,7 @@ export default class AddConnectionPage extends Component {
     }
 
     render() {
-        var { host, port, database, user, password } = this.state;
+        var { host, port, database, user, password } = this.state.connection;
         return <div className="container add-connection-page">
             <div className="page-header">
                 <h3>Add connection</h3>
@@ -71,7 +70,7 @@ export default class AddConnectionPage extends Component {
                 <div className="row">
                     <div className="col-xs-8">
                         <label>Host</label>
-                        <input type="text" name="host" value={host} onChange={this.bindValue.bind(this)} className="form-control" ref="host"/>
+                        <input type="text" name="host" value={host} onChange={this.bindValue.bind(this)} className="form-control"/>
                     </div>
                     <div className="col-xs-4">
                         <label>Port</label>
@@ -81,7 +80,7 @@ export default class AddConnectionPage extends Component {
             </div>
             <div className="form-group">
                 <label>Database</label>
-                <input type="text" name="database" value={database} onChange={this.bindValue.bind(this)} className="form-control"/>
+                <input type="text" name="database" value={database} onChange={this.bindValue.bind(this)} className="form-control" ref="database"/>
             </div>
             <div className="form-group">
                 <div className="row">
@@ -119,9 +118,8 @@ export default class AddConnectionPage extends Component {
         if (valid === null)
             return '';
         if (valid === true)
-            return <i className="fa fa-check"></i>;
+            return <span className="text-success"><i className="text-success fa fa-check"></i> OK</span>;
         if (valid === false)
-            return <i className="fa fa-ban"></i>;
-        return 'What';
+            return <i className="text-warning fa fa-warning"></i>;
     }
 }
