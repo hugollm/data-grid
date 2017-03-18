@@ -8,6 +8,10 @@ const store = new TrueStore({
         connections: null,
         selectedConnection: null,
     },
+
+    dashboard: {
+        tables: [],
+    },
 });
 
 store.debug = true;
