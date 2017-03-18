@@ -1,6 +1,7 @@
 {
   "main": "electron.js",
   "scripts": {
+    "start": "node build.js && electron .",
     "server": "webpack-dev-server --content-base static --inline --hot",
     "build": "node build.js",
     "electron": "electron ."
