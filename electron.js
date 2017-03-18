@@ -3,6 +3,7 @@ const path = require('path');
 
 electron.app.on('ready', start);
 electron.ipcMain.on('test-connection-request', testConnection);
+electron.ipcMain.on('query-request', query);
 
 function start() {
     var mainWindow = new electron.BrowserWindow({width: 1280, height: 768});
@@ -20,5 +21,20 @@ function testConnection(event, params) {
         event.sender.send('test-connection-response', {valid: valid, error: errorMessage});
         if (valid)
             client.end();
+    });
+}
+
+function query(event, connection, sql, args) {
+    var pg = require('pg');
+    var client = new pg.Client(connection);
+    client.connect((error) => {
+        if (error) throw error;
+        client.query(sql, args, (error, result) => {
+            if (error) throw error;
+            event.sender.send('query-response', result);
+            client.end((error) => {
+                if (error) throw error;
+            });
+        });
     });
 }
