@@ -11,6 +11,8 @@ const store = new TrueStore({
 
     dashboard: {
         tables: [],
+        selectedTable: null,
+        tableData: null,
     },
 });
 

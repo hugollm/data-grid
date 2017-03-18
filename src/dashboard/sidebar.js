@@ -3,7 +3,7 @@ import Component from 'app/component';
 
 import store from 'app/store';
 import { changePage } from 'app/actions';
-import { loadTables } from './actions';
+import { loadTables, selectTable } from './actions';
 
 
 export default class Sidebar extends Component {
@@ -11,6 +11,7 @@ export default class Sidebar extends Component {
     constructor() {
         super();
         this.updateOnData('dashboard.tables');
+        this.updateOnData('dashboard.selectedTable');
     }
 
     componentDidMount() {
@@ -18,10 +19,12 @@ export default class Sidebar extends Component {
     }
 
     onClickQuery() {
+        selectTable(null);
         changePage('query');
     }
 
     onClickTable(tableName) {
+        selectTable(tableName);
         changePage('table');
     }
 
@@ -29,9 +32,7 @@ export default class Sidebar extends Component {
         var tables = store.get('dashboard.tables');
         return <div className="col-sm-3 col-md-2 sidebar">
             <ul className="nav nav-sidebar">
-                <li className="active" onClick={this.onClickQuery.bind(this)}>
-                    <a href="#"><i className="fa fa-pencil-square-o"></i> Query</a>
-                </li>
+                {this.renderQueryItem()}
             </ul>
             <ul className="nav nav-sidebar">
                 {tables.map((tableName) => this.renderTableItem(tableName))}
@@ -39,7 +40,17 @@ export default class Sidebar extends Component {
         </div>;
     }
 
+    renderQueryItem() {
+        var className = store.get('app.page') == 'query' ? 'active' : '';
+        return <li onClick={this.onClickQuery.bind(this)} className={className}>
+            <a href="#"><i className="fa fa-pencil-square-o"></i> Query</a>
+        </li>;
+    }
+
     renderTableItem(tableName) {
-        return <li onClick={() => this.onClickTable(tableName)}><a href="#"><i className="fa fa-table"></i> {tableName}</a></li>;
+        var className = store.get('dashboard.selectedTable') == tableName ? 'active' : '';
+        return <li onClick={() => this.onClickTable(tableName)} className={className}>
+            <a href="#"><i className="fa fa-table"></i> {tableName}</a>
+        </li>;
     }
 }
