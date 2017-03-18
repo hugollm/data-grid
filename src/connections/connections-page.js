@@ -1,9 +1,10 @@
 import React from 'react';
+import electron from 'electron';
 import Component from 'app/component';
 
 import store from 'app/store';
 import { changePage } from 'app/actions';
-import { loadConnections } from './actions';
+import { loadConnections, forgetConnection } from './actions';
 import './style.scss';
 
 
@@ -24,6 +25,14 @@ export default class ConnectionsPage extends Component {
 
     onClickConnection(connection) {
         changePage('query');
+    }
+
+    onContextConnection(connection) {
+        const { Menu, MenuItem } = electron.remote;
+        var menu = new Menu();
+        var item = new MenuItem({label: 'Forget', click: () => forgetConnection(connection)});
+        menu.append(item);
+        menu.popup(electron.remote.getCurrentWindow());
     }
 
     render() {
@@ -50,7 +59,8 @@ export default class ConnectionsPage extends Component {
     }
 
     renderConnection(connection) {
-        return <li className="list-group-item connection" onClick={() => this.onClickConnection(connection)}>
+        return <li className="list-group-item connection"
+                    onClick={() => this.onClickConnection(connection)} onContextMenu={() => this.onContextConnection(connection)}>
             <div className="row">
                 <div className="col-xs-1">
                     <i className="fa fa-database"></i>

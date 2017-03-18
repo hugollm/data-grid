@@ -32,3 +32,14 @@ export const saveConnection = store.action('saveConnection', (state, connection)
         });
     });
 });
+
+export const forgetConnection = store.action('forgetConnection', (state, connection) => {
+    storage.get('connections', (error, connections) => {
+        for (var i in connections)
+            if (JSON.stringify(connections[i]) == JSON.stringify(connection))
+                connections.splice(i, 1);
+        storage.set('connections', connections, (error) => {
+            updateConnections(connections);
+        });
+    });
+});
