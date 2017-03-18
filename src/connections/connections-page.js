@@ -50,12 +50,12 @@ export default class ConnectionsPage extends Component {
         var connections = store.get('app.connections');
         if (connections === null)
             return;
-        if (connections)
+        if (connections.length)
             return <ul className="list-group">
                 {connections.map(this.renderConnection.bind(this))}
             </ul>;
         else
-            return <p className="text-muted">No connections.</p>;
+            return <p className="text-muted">No registered connections.</p>;
     }
 
     renderConnection(connection) {
