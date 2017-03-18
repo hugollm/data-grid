@@ -3,12 +3,14 @@ import Component from 'app/component';
 
 import store from 'app/store';
 import { changePage } from 'app/actions';
+import { selectTable } from 'dashboard/actions';
 import { disconnect } from './actions';
 
 
 export default class Navbar extends Component {
 
     onClickBrand() {
+        selectTable(null);
         changePage('query');
     }
 
