@@ -12,13 +12,13 @@ export default class TablePage extends Component {
 
     constructor() {
         super();
-        this.updateOnData('dashboard.tableData');
+        this.updateOnData('table.data');
     }
 
     render() {
         return <div className="table-page">
             {this.renderPagination()}
-            <DataTable result={store.get('dashboard.tableData')}/>
+            <DataTable result={store.get('table.data')}/>
         </div>;
     }
 

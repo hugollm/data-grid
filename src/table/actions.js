@@ -8,5 +8,5 @@ export const loadTableData = store.action('loadTableData', (state, callback) => 
 });
 
 const updateTableData = store.action('updateTableData', (state, result) => {
-    state.dashboard.tableData = result;
+    state.table.data = result;
 });

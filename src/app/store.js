@@ -9,14 +9,17 @@ const store = new TrueStore({
         selectedConnection: null,
     },
 
+    dashboard: {
+        tables: [],
+        selectedTable: null,
+    },
+
     query: {
         error: null,
     },
 
-    dashboard: {
-        tables: [],
-        selectedTable: null,
-        tableData: null,
+    table: {
+        data: null,
     },
 });
 
