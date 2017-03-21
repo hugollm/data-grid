@@ -29,6 +29,8 @@ const updateTables = store.action('updateTables', (state, rows) => {
 
 export const selectTable = store.action('selectTable', (state, tableName) => {
     state.dashboard.selectedTable = tableName;
+    state.table.page = 1;
+    state.table.data = null;
     if (tableName)
         loadTableData();
 });

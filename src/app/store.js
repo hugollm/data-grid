@@ -20,6 +20,8 @@ const store = new TrueStore({
 
     table: {
         data: null,
+        page: 1,
+        perPage: 15,
     },
 });
 
