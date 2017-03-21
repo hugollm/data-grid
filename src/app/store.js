@@ -9,6 +9,10 @@ const store = new TrueStore({
         selectedConnection: null,
     },
 
+    query: {
+        error: null,
+    },
+
     dashboard: {
         tables: [],
         selectedTable: null,

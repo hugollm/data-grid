@@ -28,12 +28,15 @@ function query(event, connection, sql, args) {
     var pg = require('pg');
     var client = new pg.Client(connection);
     client.connect((error) => {
-        if (error) throw error;
+        if (error)
+            return event.sender.send('query-error', error.message);
         client.query(sql, args, (error, result) => {
-            if (error) throw error;
+            if (error)
+                return event.sender.send('query-error', error.message);
             event.sender.send('query-response', result);
             client.end((error) => {
-                if (error) throw error;
+                if (error)
+                    return event.sender.send('query-error', error.message);
             });
         });
     });
