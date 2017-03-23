@@ -9,7 +9,7 @@ export default class DataTable extends React.Component {
             return <div></div>;
         if (result.fields.length == 0)
             return <p className="text-muted" style={{marginTop: '20px'}}>No results.</p>;
-        return <div className="table-responsive">
+        return <div className="table-responsive data-table">
             <table className="table table-bordered table-condensed table-hover">
                 <thead>
                     <tr>
@@ -40,10 +40,12 @@ export default class DataTable extends React.Component {
     renderValue(value) {
         if (value === null)
             return <em className="text-muted">NULL</em>;
+        if (value === '')
+            return <em className="text-muted">EMPTY STRING</em>
         else if (value === true)
-            return <em className="text-muted">TRUE</em>;
+            return <em className="text-success">TRUE</em>;
         else if (value === false)
-            return <em className="text-muted">FALSE</em>;
+            return <em className="text-danger">FALSE</em>;
         else
             return value;
     }

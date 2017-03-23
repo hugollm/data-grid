@@ -5,3 +5,14 @@
         margin-bottom: 10px;
     }
 }
+
+.data-table {
+
+    em.text-muted {
+        opacity: 0.5;
+    }
+
+    em.text-success, em.text-danger {
+        opacity: 0.9;
+    }
+}
