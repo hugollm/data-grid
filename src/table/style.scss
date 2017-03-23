@@ -15,4 +15,10 @@
     em.text-success, em.text-danger {
         opacity: 0.9;
     }
+
+    td {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
