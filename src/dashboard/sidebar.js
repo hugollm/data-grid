@@ -10,6 +10,7 @@ export default class Sidebar extends Component {
 
     constructor() {
         super();
+        this.state = {filter: ''};
         this.updateOnData('dashboard.tables');
         this.updateOnData('dashboard.selectedTable');
     }
@@ -28,6 +29,10 @@ export default class Sidebar extends Component {
         changePage('table');
     }
 
+    onChangeFilter(e) {
+        this.setState({filter: e.target.value.trim()});
+    }
+
     render() {
         var tables = store.get('dashboard.tables');
         return <div className="col-sm-3 col-md-2 sidebar">
@@ -35,7 +40,8 @@ export default class Sidebar extends Component {
                 {this.renderQueryItem()}
             </ul>
             <ul className="nav nav-sidebar">
-                {tables.map((tableName) => this.renderTableItem(tableName))}
+                {this.renderTableSearch()}
+                {this.renderTableItems(tables)}
             </ul>
         </div>;
     }
@@ -45,6 +51,20 @@ export default class Sidebar extends Component {
         return <li onClick={this.onClickQuery.bind(this)} className={className}>
             <a href="#"><i className="fa fa-pencil-square-o"></i> Query</a>
         </li>;
+    }
+
+    renderTableSearch() {
+        return <li>
+            <input type="text" placeholder="Filter tables..."
+                value={this.state.filter} onChange={this.onChangeFilter.bind(this)}/>
+        </li>;
+    }
+
+    renderTableItems(tables) {
+        var filter = this.state.filter;
+        if (filter)
+            tables = tables.filter((table) => table.indexOf(filter) !== -1);
+        return tables.map((tableName) => this.renderTableItem(tableName));
     }
 
     renderTableItem(tableName) {

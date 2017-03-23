@@ -55,6 +55,17 @@
     margin-right: 5px;
 }
 
+.nav-sidebar input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    opacity: 0.8;
+}
+
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:focus,
 .nav-sidebar > .active > a:hover {
