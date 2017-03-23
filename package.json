@@ -26,6 +26,7 @@
     "electron-json-storage": "^3.0.1",
     "pg": "^6.1.4",
     "react": "^15.1.0",
+    "react-ace": "^4.1.6",
     "react-dom": "^15.1.0",
     "true-store": "^0.1.5"
   }

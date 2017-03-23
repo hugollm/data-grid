@@ -3,6 +3,10 @@ import React from 'react';
 import Component from 'app/component';
 import DataTable from 'table/data-table';
 
+import AceEditor from 'react-ace';
+import 'brace/mode/sql';
+import 'brace/theme/tomorrow';
+
 import store from 'app/store';
 import { query } from './actions';
 import './style.scss';
@@ -21,8 +25,8 @@ export default class QueryPage extends Component {
             this.onClickRun();
     }
 
-    onChangeSql(e) {
-        this.setState({sql: e.target.value});
+    onChangeSql(sql) {
+        this.setState({sql: sql});
     }
 
     onClickRun() {
@@ -38,7 +42,18 @@ export default class QueryPage extends Component {
             <button className="btn btn-default" onClick={this.onClickRun.bind(this)}>
                 <i className="fa fa-play"></i> Run <span className="text-muted">(F5)</span>
             </button>
-            <textarea name="sql" className="form-control" rows="5" onChange={this.onChangeSql.bind(this)}>{sql}</textarea>
+            <AceEditor
+                mode="sql"
+                theme="tomorrow"
+                highlightActiveLine={false}
+                width="100%"
+                minLines={5}
+                maxLines={40}
+                fontSize="16px"
+                focus={true}
+                value={sql}
+                onChange={this.onChangeSql.bind(this)}
+            />
             {error ? <p className="text-danger">{error}</p> : <DataTable result={this.state.result}/>}
         </div>;
     }
