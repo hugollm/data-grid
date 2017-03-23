@@ -8,6 +8,9 @@ export const disconnect = store.action('disconnect', (state) => {
     state.app.selectedConnection = null;
     state.dashboard.tables = [];
     state.dashboard.selectedTable = null;
+    state.query.sql = '';
+    state.query.result = null;
+    state.query.error = null;
 });
 
 export const loadTables = store.action('loadTables', (state) => {

@@ -15,6 +15,8 @@ const store = new TrueStore({
     },
 
     query: {
+        sql: '',
+        result: null,
         error: null,
     },
 

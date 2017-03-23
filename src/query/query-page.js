@@ -8,7 +8,7 @@ import 'brace/mode/sql';
 import 'brace/theme/tomorrow';
 
 import store from 'app/store';
-import { query } from './actions';
+import { updateSql, updateResult, query } from './actions';
 import './style.scss';
 
 
@@ -16,8 +16,7 @@ export default class QueryPage extends Component {
 
     constructor() {
         super();
-        this.state = {sql: '', result: null};
-        this.updateOnData('query.error');
+        this.updateOnData('query');
     }
 
     onKeyDown(e) {
@@ -26,18 +25,17 @@ export default class QueryPage extends Component {
     }
 
     onChangeSql(sql) {
-        this.setState({sql: sql});
+        updateSql(sql);
     }
 
     onClickRun() {
-        query(this.state.sql, [], (result) => {
-            this.setState({result: result});
+        query(store.get('query.sql'), [], (result) => {
+            updateResult(result);
         });
     }
 
     render() {
-        var sql = this.state.sql;
-        var error = store.get('query.error');
+        var { sql, result, error } = store.get('query');
         return <div className="query-page" onKeyDown={this.onKeyDown.bind(this)}>
             <button className="btn btn-default" onClick={this.onClickRun.bind(this)}>
                 <i className="fa fa-play"></i> Run <span className="text-muted">(F5)</span>
@@ -51,10 +49,11 @@ export default class QueryPage extends Component {
                 maxLines={40}
                 fontSize="16px"
                 focus={true}
+                editorProps={{$blockScrolling: true}}
                 value={sql}
                 onChange={this.onChangeSql.bind(this)}
             />
-            {error ? <p className="text-danger">{error}</p> : <DataTable result={this.state.result}/>}
+            {error ? <p className="text-danger">{error}</p> : <DataTable result={result}/>}
         </div>;
     }
 }
