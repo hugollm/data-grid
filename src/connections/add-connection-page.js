@@ -16,6 +16,7 @@ export default class AddConnectionPage extends Component {
                 database: '',
                 user: 'postgres',
                 password: '',
+                ssl: true,
             },
             connectionIsValid: null,
             connectionError: '',
