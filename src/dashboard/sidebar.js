@@ -11,8 +11,7 @@ export default class Sidebar extends Component {
     constructor() {
         super();
         this.state = {filter: ''};
-        this.updateOnData('dashboard.tables');
-        this.updateOnData('dashboard.selectedTable');
+        this.updateOnData('dashboard');
     }
 
     componentDidMount() {
@@ -61,6 +60,8 @@ export default class Sidebar extends Component {
     }
 
     renderTableItems(tables) {
+        if (!tables.length && store.get('dashboard.loadingTables'))
+            return <li><a><i className="fa fa-spinner fa-pulse"></i></a></li>;
         var filter = this.state.filter;
         if (filter)
             tables = tables.filter((table) => table.indexOf(filter) !== -1);

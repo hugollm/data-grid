@@ -21,6 +21,7 @@ export const loadTables = store.action('loadTables', (state) => {
     sql += " WHERE table_schema = $1::text ORDER BY table_name";
     var args = ['public'];
     ipcRenderer.send('query-request', state.app.selectedConnection, sql, args);
+    state.dashboard.loadingTables = true;
 });
 
 const updateTables = store.action('updateTables', (state, rows) => {
@@ -28,6 +29,7 @@ const updateTables = store.action('updateTables', (state, rows) => {
     for (var i in rows)
         tables.push(rows[i].table_name);
     state.dashboard.tables = tables;
+    state.dashboard.loadingTables = false;
 });
 
 export const selectTable = store.action('selectTable', (state, tableName) => {
