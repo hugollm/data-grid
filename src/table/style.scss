@@ -1,8 +1,15 @@
 .table-page {
 
     .pagination {
+
         margin-top: 0;
         margin-bottom: 10px;
+
+        .page-counter a {
+            cursor: default;
+            background-color: inherit;
+            color: #666;
+        }
     }
 }
 

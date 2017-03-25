@@ -15,6 +15,10 @@ export default class TablePage extends Component {
         this.updateOnData('table');
     }
 
+    onClickFirstPage() {
+        changeTablePage(1);
+    }
+
     onClickPreviousPage() {
         var page = store.get('table.page') - 1;
         if (page < 1)
@@ -31,6 +35,10 @@ export default class TablePage extends Component {
         else if (page > maxPage)
             page = maxPage;
         changeTablePage(page);
+    }
+
+    onClickLastPage() {
+        changeTablePage(this.maxPage());
     }
 
     maxPage() {
@@ -50,15 +58,27 @@ export default class TablePage extends Component {
     renderPagination() {
         return <nav aria-label="Page navigation">
             <ul className="pagination">
-                <li onClick={this.onClickPreviousPage.bind(this)}>
+                <li onClick={this.onClickFirstPage.bind(this)}>
                     <a href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                        <i className="fa fa-fast-backward"></i>
                     </a>
                 </li>
-                <li><a href="#">{store.get('table.page')} / {this.maxPage()}</a></li>
+                <li onClick={this.onClickPreviousPage.bind(this)}>
+                    <a href="#" aria-label="Previous">
+                        <i className="fa fa-step-backward"></i>
+                    </a>
+                </li>
+                <li className="page-counter">
+                    <a href="#">{store.get('table.page')} / {this.maxPage()}</a>
+                </li>
                 <li onClick={this.onClickNextPage.bind(this)}>
                     <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                        <i className="fa fa-step-forward"></i>
+                    </a>
+                </li>
+                <li onClick={this.onClickLastPage.bind(this)}>
+                    <a href="#" aria-label="Next">
+                        <i className="fa fa-fast-forward"></i>
                     </a>
                 </li>
             </ul>
