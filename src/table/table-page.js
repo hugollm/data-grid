@@ -58,30 +58,54 @@ export default class TablePage extends Component {
     renderPagination() {
         return <nav aria-label="Page navigation">
             <ul className="pagination">
-                <li onClick={this.onClickFirstPage.bind(this)}>
-                    <a href="#" aria-label="Previous">
-                        <i className="fa fa-fast-backward"></i>
-                    </a>
-                </li>
-                <li onClick={this.onClickPreviousPage.bind(this)}>
-                    <a href="#" aria-label="Previous">
-                        <i className="fa fa-step-backward"></i>
-                    </a>
-                </li>
+                {this.renderFirstPageButton()}
+                {this.renderPreviousPageButton()}
                 <li className="page-counter">
                     <a href="#">{store.get('table.page')} / {this.maxPage()}</a>
                 </li>
-                <li onClick={this.onClickNextPage.bind(this)}>
-                    <a href="#" aria-label="Next">
-                        <i className="fa fa-step-forward"></i>
-                    </a>
-                </li>
-                <li onClick={this.onClickLastPage.bind(this)}>
-                    <a href="#" aria-label="Next">
-                        <i className="fa fa-fast-forward"></i>
-                    </a>
-                </li>
+                {this.renderNextPageButton()}
+                {this.renderLastPageButton()}
             </ul>
         </nav>;
+    }
+
+    renderFirstPageButton() {
+        var inFirst = store.get('table.page') === 1;
+        var className = inFirst ? 'disabled' : '';
+        return <li className={className} onClick={this.onClickFirstPage.bind(this)}>
+            <a href="#" aria-label="Previous">
+                <i className="fa fa-fast-backward"></i>
+            </a>
+        </li>;
+    }
+
+    renderPreviousPageButton() {
+        var hasPrevious = store.get('table.page') > 1;
+        var className = hasPrevious ? '' : 'disabled';
+        return <li className={className} onClick={this.onClickPreviousPage.bind(this)}>
+            <a href="#" aria-label="Previous">
+                <i className="fa fa-step-backward"></i>
+            </a>
+        </li>;
+    }
+
+    renderNextPageButton() {
+        var hasNext = store.get('table.page') < this.maxPage();
+        var className = hasNext ? '' : 'disabled';
+        return <li className={className} onClick={this.onClickNextPage.bind(this)}>
+            <a href="#" aria-label="Next">
+                <i className="fa fa-step-forward"></i>
+            </a>
+        </li>;
+    }
+
+    renderLastPageButton() {
+        var inLast = store.get('table.page') === this.maxPage();
+        var className = inLast ? 'disabled' : '';
+        return <li className={className} onClick={this.onClickLastPage.bind(this)}>
+            <a href="#" aria-label="Next">
+                <i className="fa fa-fast-forward"></i>
+            </a>
+        </li>;
     }
 }

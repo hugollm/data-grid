@@ -4,11 +4,18 @@
 
         margin-top: 0;
         margin-bottom: 10px;
+        opacity: 0.8;
 
         .page-counter a {
             cursor: default;
             background-color: inherit;
-            color: #666;
+            color: #333;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .disabled a {
+            cursor: default;
         }
     }
 }
