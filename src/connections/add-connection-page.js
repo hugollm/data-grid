@@ -13,10 +13,10 @@ export default class AddConnectionPage extends Component {
             connection: {
                 host: '/var/run/postgresql',
                 port: '5432',
+                ssl: false,
                 database: '',
                 user: 'postgres',
                 password: '',
-                ssl: true,
             },
             connectionIsValid: null,
             connectionError: '',
@@ -30,8 +30,8 @@ export default class AddConnectionPage extends Component {
     bindValue(e) {
         var connection = this.state.connection;
         var name = e.target.name;
-        var value = e.target.value;
-        if (name != 'password')
+        var value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        if (name != 'ssl' && name != 'password')
             value = value.trim()
         connection[name] = value;
         this.setState({connection: connection});
@@ -64,20 +64,26 @@ export default class AddConnectionPage extends Component {
     }
 
     render() {
-        var { host, port, database, user, password } = this.state.connection;
+        var { host, port, ssl, database, user, password } = this.state.connection;
         return <div className="container add-connection-page">
             <div className="page-header">
                 <h3>Add connection</h3>
             </div>
             <div className="form-group">
                 <div className="row">
-                    <div className="col-xs-8">
+                    <div className="col-xs-7">
                         <label>Host</label>
                         <input type="text" name="host" value={host} onChange={this.bindValue.bind(this)} className="form-control"/>
                     </div>
-                    <div className="col-xs-4">
+                    <div className="col-xs-3">
                         <label>Port</label>
                         <input type="number" name="port" value={port} onChange={this.bindValue.bind(this)} className="form-control"/>
+                    </div>
+                    <div className="col-xs-2">
+                        <label>SSL</label>
+                        <div className="checkbox">
+                            <label><input type="checkbox" name="ssl" checked={ssl} onChange={this.bindValue.bind(this)}/> {ssl ? 'Yes' : 'No'}</label>
+                        </div>
                     </div>
                 </div>
             </div>
