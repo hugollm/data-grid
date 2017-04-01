@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import storage from 'electron-json-storage';
 import store from 'app/store';
+import { changePage } from 'app/actions';
 
 
 export const loadConnections = store.action('loadConnections', (state) => {
@@ -13,10 +14,6 @@ export const loadConnections = store.action('loadConnections', (state) => {
 
 const updateConnections = store.action('updateConnections', (state, connections) => {
     state.app.connections = connections;
-});
-
-export const selectConnection = store.action('selectConnection', (state, connection) => {
-    state.app.selectedConnection = connection;
 });
 
 export const checkConnection = store.action('checkConnection', (state, connection, callback) => {
@@ -46,4 +43,40 @@ export const forgetConnection = store.action('forgetConnection', (state, connect
             updateConnections(connections);
         });
     });
+});
+
+export const connect = store.action('connect', (state, connection) => {
+    state.app.currentConnection = connection;
+    ipcRenderer.once('connect-ok', connectOk);
+    ipcRenderer.once('connect-error', connectError);
+    ipcRenderer.send('connect-request', connection);
+});
+
+const connectOk = store.action('connectOk', (state) => {
+    changePage('query');
+});
+
+const connectError = store.action('connectError', (state, error) => {
+    state.app.currentConnection = null;
+    alert(error);
+});
+
+export const disconnect = store.action('disconnect', (state, params) => {
+    ipcRenderer.once('disconnect-ok', disconnectOk);
+    ipcRenderer.once('disconnect-error', disconnectError);
+    ipcRenderer.send('disconnect-request');
+});
+
+const disconnectOk = store.action('disconnectOk', (state) => {
+    state.app.currentConnection = null;
+    state.dashboard.tables = [];
+    state.dashboard.selectedTable = null;
+    state.query.sql = '';
+    state.query.result = null;
+    state.query.error = null;
+    changePage('connections');
+});
+
+const disconnectError = store.action('disconnectError', (state, error) => {
+    alert(error);
 });

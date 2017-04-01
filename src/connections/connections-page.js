@@ -4,7 +4,7 @@ import Component from 'app/component';
 
 import store from 'app/store';
 import { changePage } from 'app/actions';
-import { loadConnections, selectConnection, forgetConnection } from './actions';
+import { loadConnections, connect, forgetConnection } from './actions';
 import './style.scss';
 
 
@@ -24,8 +24,7 @@ export default class ConnectionsPage extends Component {
     }
 
     onClickConnection(connection) {
-        selectConnection(connection);
-        changePage('query');
+        connect(connection);
     }
 
     onContextConnection(connection) {

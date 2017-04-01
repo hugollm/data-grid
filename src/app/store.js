@@ -6,7 +6,7 @@ const store = new TrueStore({
     app: {
         page: 'connections',
         connections: null,
-        selectedConnection: null,
+        currentConnection: null,
     },
 
     dashboard: {

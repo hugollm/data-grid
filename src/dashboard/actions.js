@@ -5,15 +5,6 @@ import { query } from 'query/actions';
 import { loadTableData } from 'table/actions';
 
 
-export const disconnect = store.action('disconnect', (state) => {
-    state.app.selectedConnection = null;
-    state.dashboard.tables = [];
-    state.dashboard.selectedTable = null;
-    state.query.sql = '';
-    state.query.result = null;
-    state.query.error = null;
-});
-
 export const loadTables = store.action('loadTables', (state) => {
     var sql = "SELECT table_name FROM information_schema.tables";
     sql += " WHERE table_schema = $1::text ORDER BY table_name";

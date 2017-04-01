@@ -3,8 +3,8 @@ import Component from 'app/component';
 
 import store from 'app/store';
 import { changePage } from 'app/actions';
-import { selectTable } from 'dashboard/actions';
-import { disconnect } from './actions';
+import { disconnect } from 'connections/actions';
+import { selectTable } from './actions';
 
 
 export default class Navbar extends Component {
@@ -16,11 +16,10 @@ export default class Navbar extends Component {
 
     onClickDisconnect() {
         disconnect();
-        changePage('connections');
     }
 
     render() {
-        var connection = store.get('app.selectedConnection');
+        var connection = store.get('app.currentConnection');
         return <nav className="navbar navbar-inverse navbar-fixed-top">
             <div className="container-fluid">
                 <div className="navbar-header navbar-collapse collapse">

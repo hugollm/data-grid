@@ -11,7 +11,7 @@ export const query = store.action('query', (state, sql, args, successCallback, e
         errorCallback = alertQueryError;
     var uid = uuid4();
     ipcRenderer.once('query-response-' + uid, (event, response) => queryResponse(response, successCallback, errorCallback));
-    ipcRenderer.send('query-request', state.app.selectedConnection, uid, sql, args);
+    ipcRenderer.send('query-request', uid, sql, args);
 });
 
 function uuid4() {
