@@ -24,20 +24,23 @@ function testConnection(event, params) {
     });
 }
 
-function query(event, connection, sql, args) {
+function query(event, connection, uid, sql, args) {
     var pg = require('pg');
     var client = new pg.Client(connection);
     client.connect((error) => {
         if (error)
-            return event.sender.send('query-error', error.message);
+            return sendQueryResponse(event, uid, null, error);
         client.query(sql, args, (error, result) => {
-            if (error)
-                return event.sender.send('query-error', error.message);
-            event.sender.send('query-response', result);
+            return sendQueryResponse(event, uid, result, error);
             client.end((error) => {
                 if (error)
-                    return event.sender.send('query-error', error.message);
+                    return sendQueryResponse(event, uid, null, error);
             });
         });
     });
+}
+
+function sendQueryResponse(event, uid, result, error) {
+    var response = {uid: uid, result: result, error: (error ? error.message : null)};
+    return event.sender.send('query-response-' + uid, response);
 }

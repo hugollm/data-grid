@@ -8,7 +8,7 @@ import 'brace/mode/sql';
 import 'brace/theme/tomorrow';
 
 import store from 'app/store';
-import { updateSql, updateResult, query } from './actions';
+import { updateSql, userQuery } from './actions';
 import './style.scss';
 
 
@@ -29,9 +29,7 @@ export default class QueryPage extends Component {
     }
 
     onClickRun() {
-        query(store.get('query.sql'), [], (result) => {
-            updateResult(result);
-        });
+        userQuery();
     }
 
     render() {

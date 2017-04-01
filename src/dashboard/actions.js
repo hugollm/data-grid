@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 
 import store from 'app/store';
+import { query } from 'query/actions';
 import { loadTableData } from 'table/actions';
 
 
@@ -14,20 +15,17 @@ export const disconnect = store.action('disconnect', (state) => {
 });
 
 export const loadTables = store.action('loadTables', (state) => {
-    ipcRenderer.once('query-response', (event, result) => {
-        updateTables(result.rows);
-    });
     var sql = "SELECT table_name FROM information_schema.tables";
     sql += " WHERE table_schema = $1::text ORDER BY table_name";
     var args = ['public'];
-    ipcRenderer.send('query-request', state.app.selectedConnection, sql, args);
+    query(sql, args, updateTables);
     state.dashboard.loadingTables = true;
 });
 
-const updateTables = store.action('updateTables', (state, rows) => {
+const updateTables = store.action('updateTables', (state, result) => {
     var tables = [];
-    for (var i in rows)
-        tables.push(rows[i].table_name);
+    for (var i in result.rows)
+        tables.push(result.rows[i].table_name);
     state.dashboard.tables = tables;
     state.dashboard.loadingTables = false;
 });
