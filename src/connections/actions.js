@@ -18,9 +18,15 @@ const updateConnections = store.action('updateConnections', (state, connections)
 
 export const checkConnection = store.action('checkConnection', (state, connection, callback) => {
     ipcRenderer.once('test-connection-response', (event, status) => {
+        checkConnectionFinish();
         callback(status);
     });
     ipcRenderer.send('test-connection-request', connection);
+    state.connections.checkingConnection = true;
+});
+
+const checkConnectionFinish = store.action('checkConnectionFinish', (state) => {
+    state.connections.checkingConnection = false;
 });
 
 export const saveConnection = store.action('saveConnection', (state, connection) => {

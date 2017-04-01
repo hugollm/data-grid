@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Component from 'app/component';
+import store from 'app/store';
 import { changePage } from 'app/actions';
 import { checkConnection, saveConnection } from './actions';
 
@@ -21,6 +22,7 @@ export default class AddConnectionPage extends Component {
             connectionIsValid: null,
             connectionError: '',
         };
+        this.updateOnData('connections.checkingConnection');
     }
 
     componentDidMount() {
@@ -116,14 +118,18 @@ export default class AddConnectionPage extends Component {
     }
 
     renderCheckButton() {
-        var disabled = ! this.isFormValid();
+        var checking = store.get('connections.checkingConnection');
+        var disabled = (! this.isFormValid()) || checking;
         return <button className="btn btn-default" onClick={this.onClickCheckConnection.bind(this)} disabled={disabled}>
             Check connection
         </button>;
     }
 
     renderCheckStatus() {
+        var checking = store.get('connections.checkingConnection');
         var valid = this.state.connectionIsValid;
+        if (checking)
+            return <i className="fa fa-spinner fa-pulse"></i>;
         if (valid === null)
             return '';
         if (valid === true)
