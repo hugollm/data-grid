@@ -41,7 +41,7 @@ export default class DataTable extends React.Component {
         if (value === null)
             return <em className="text-muted">NULL</em>;
         if (value === '')
-            return <em className="text-muted">EMPTY STRING</em>
+            return <em className="text-muted">STRING</em>
         else if (value === true)
             return <em className="text-success">TRUE</em>;
         else if (value === false)
