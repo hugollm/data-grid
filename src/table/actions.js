@@ -9,7 +9,7 @@ export const loadTableData = store.action('loadTableData', (state, callback) => 
 
 const updateTableCountAndLoadRows = store.action('updateTableCountAndLoadRows', (state, result) => {
     state.table.count = result.rows[0].count;
-    var sql = 'SELECT * FROM ' + state.dashboard.selectedTable + ' LIMIT $1 OFFSET $2';
+    var sql = 'SELECT * FROM ' + state.dashboard.selectedTable + ' ORDER BY 1 LIMIT $1 OFFSET $2';
     var args = [state.table.perPage, (state.table.page-1) * state.table.perPage];
     query(sql, args, updateTableData);
 });
