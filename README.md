@@ -2,6 +2,8 @@
 
 Minimalist user interface to interact with Postgresql.
 
+![](https://i.imgur.com/jxNycFX.png)
+
 IN DEVELOPMENT.
 
 
@@ -12,7 +14,6 @@ Since the app is not packaged yet, you're gonna need `NodeJS` and `npm` to run i
 Get a fresh copy:
 
     git clone https://github.com/hugollm/data-grid.git
-
 
 Install dependencies and run it:
 
